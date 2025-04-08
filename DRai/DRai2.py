@@ -11,6 +11,7 @@ from google.generativeai.types import BlockedPromptException
 load_dotenv()
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
+#HW2
 def summarize_feedback_batch(feedbacks, scores):
     try:
         model = genai.GenerativeModel("gemini-1.5-flash")
@@ -24,7 +25,7 @@ def summarize_feedback_batch(feedbacks, scores):
 
         result_blocks = response.text.strip().split("\n\n")
         parsed_results = []
-
+#HW2
         for block in result_blocks:
             emp_id, summary, sentiment = "", "", ""
             for line in block.strip().splitlines():
@@ -34,7 +35,7 @@ def summarize_feedback_batch(feedbacks, scores):
                     summary = line.replace("反饋總結：", "").strip()
                 elif line.startswith("正負面評分："):
                     sentiment = line.replace("正負面評分：", "").strip()
-
+#HW2
             parsed_results.append({
                 "員工ID": emp_id,
                 "正負面評分": sentiment,
@@ -67,7 +68,7 @@ def main():
     for i in range(0, len(df), batch_size):
         batch = df.iloc[i:i+batch_size]
         print(f"\n🔄 處理第 {i+1} 到 {i+len(batch)} 筆...")
-
+#HW2
         batch_input = []
         for _, row in batch.iterrows():
             batch_input.append({
